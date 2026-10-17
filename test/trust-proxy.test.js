@@ -278,7 +278,7 @@ describe('TRUST_PROXY list validation', () => {
   const req = { socket: { remoteAddress: '127.0.0.1' }, headers: {} };
 
   test('invalid entries throw and name the offending value', () => {
-    for (const entry of ['', '   ', 7, 'not-an-ip', '10.0.0.0/33', '::/129']) {
+    for (const entry of ['', '   ', 7, 'not-an-ip', '10.0.0.0/33', '::/129', '10.0.0.0/']) {
       assert.throws(
         () => resolveClientIp(req, [entry]),
         error => error.message.includes(`got "${entry}"`),
@@ -309,6 +309,4 @@ describe('TRUST_PROXY list validation', () => {
       '203.0.113.7',
     );
   });
-
-  test.todo('rejects a CIDR entry with a dangling slash; source validation is out of scope');
 });
